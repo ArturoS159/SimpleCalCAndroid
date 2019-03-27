@@ -7,15 +7,23 @@ import android.widget.TextView;
 
 
 public class MainActivity extends AppCompatActivity {
-    private TextView textViewScore;
     private TextView textViewExpression;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textViewScore = findViewById(R.id.textViewScore);
         textViewExpression = findViewById(R.id.textViewExpression);
+    }
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("StringKey", textViewExpression.getText().toString());
+    }
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        String restore = savedInstanceState.getString("StringKey");
+        textViewExpression.setText(restore);
     }
 
     public void buttonACClick(View view) {
@@ -23,35 +31,45 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void buttonPMClick(View view) {
-        System.out.println("PM");
+        textViewExpression.setText( Calculator.negation(textViewExpression.getText().toString()));
     }
 
     public void buttonPercentageClick(View view) {
-        System.out.println("%");
+        textViewExpression.setText( Calculator.percent(textViewExpression.getText().toString()));
     }
 
     public void buttonDivClick(View view) {
-        textViewExpression.setText(textViewExpression.getText().toString()+"/");
+        if(Calculator.validate(textViewExpression.getText().toString()+"/")){
+            textViewExpression.setText(textViewExpression.getText().toString()+"/");
+        }
     }
 
     public void buttonMutiplyClick(View view) {
-        textViewExpression.setText(textViewExpression.getText().toString()+"*");
+        if(Calculator.validate(textViewExpression.getText().toString()+"*")){
+            textViewExpression.setText(textViewExpression.getText().toString()+"*");
+        }
     }
 
     public void buttonAddClick(View view) {
-         textViewExpression.setText(textViewExpression.getText().toString()+"+");
+        if(Calculator.validate(textViewExpression.getText().toString()+"+")){
+            textViewExpression.setText(textViewExpression.getText().toString()+"+");
+        }
     }
 
     public void buttonMinusClick(View view) {
-        textViewExpression.setText(textViewExpression.getText().toString()+"-");
+        if(Calculator.validate(textViewExpression.getText().toString()+"-")){
+            textViewExpression.setText(textViewExpression.getText().toString()+"-");
+        }
     }
 
     public void buttonDotClick(View view) {
-        textViewExpression.setText(textViewExpression.getText().toString()+",");
+        if(Calculator.validate(textViewExpression.getText().toString()+",")){
+            textViewExpression.setText(textViewExpression.getText().toString()+".");
+        }
     }
 
     public void buttonEqualClick(View view) {
-        textViewScore.setText(Count.test(textViewExpression.getText().toString()));
+        textViewExpression.setText(Calculator.count(textViewExpression.getText().toString()));
     }
 
     public void button0Click(View view) {
@@ -92,5 +110,25 @@ public class MainActivity extends AppCompatActivity {
 
     public void button9Click(View view) {
         textViewExpression.setText(textViewExpression.getText().toString()+"9");
+    }
+
+    public void buttonLogClick(View view) {
+        textViewExpression.setText( Calculator.log(textViewExpression.getText().toString()));
+    }
+
+    public void buttonSilniaClick(View view) {
+        textViewExpression.setText( Calculator.silnia(textViewExpression.getText().toString()));
+    }
+
+    public void buttonSqrtClick(View view) {
+        textViewExpression.setText( Calculator.sqrt(textViewExpression.getText().toString()));
+    }
+
+    public void buttonx3click(View view) {
+        textViewExpression.setText( Calculator.x3(textViewExpression.getText().toString()));
+    }
+
+    public void buttonx2Click(View view) {
+        textViewExpression.setText( Calculator.x2(textViewExpression.getText().toString()));
     }
 }
